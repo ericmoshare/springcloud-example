@@ -1,0 +1,56 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: local
+  application:
+    name: titan-user-boot
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: h2
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: titan-user-boot
+
+logging:
+  path: /apps/logs/springboot/titan-user-boot
+  level:
+     org.springframework: INFO
+     org.hibernate: INFO
+     org.hibernate.type.descriptor.sql: DEBUG
+
+info:
+  app:
+    name: @project.artifactId@
+    java:
+      source: @java.version@
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+
+---
+spring:
+  profiles: local

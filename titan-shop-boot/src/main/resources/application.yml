@@ -1,0 +1,48 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: local
+  application:
+    name: titan-shop-boot
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: titan-shop-boot
+
+logging:
+  path: /apps/logs/springboot/titan-shop-boot
+  level:
+     org.springframework: INFO
+     org.hibernate: INFO
+
+user:
+  getUserUrl: http://localhost:8080/findByUserId/
+
+
+info:
+  app:
+    name: @project.artifactId@
+    java:
+      source: @java.version@
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+---
+spring:
+  profiles: local

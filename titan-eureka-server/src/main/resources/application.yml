@@ -1,0 +1,89 @@
+server:
+  port: 8761
+spring:
+  profiles:
+    active: local
+  application:
+    name: titan-eureka-server
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: titan-eureka-server
+
+logging:
+  path: /apps/logs/springboot/titan-eureka-server
+  level:
+     org.springframework: INFO
+     org.hibernate: INFO
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+
+---
+spring:
+  profiles: local
+  application:
+    name: titan-eureka-server
+server:
+  port: 8761
+
+
+---
+spring:
+  profiles: ha
+  application:
+    name: titan-eureka-server-ha
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://ha1:8761/eureka;http://ha2:8762/eureka
+
+---
+spring:
+  profiles: ha1
+  application:
+    name: titan-eureka-server-ha
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: ha1
+  client:
+    serviceUrl:
+      defaultZone: http://ha2:8762/eureka
+
+
+---
+spring:
+  profiles: ha2
+  application:
+    name: titan-eureka-server-ha
+server:
+  port: 8762
+
+eureka:
+  instance:
+    hostname: ha2
+  client:
+    serviceUrl:
+      defaultZone: http://ha1:8761/eureka
