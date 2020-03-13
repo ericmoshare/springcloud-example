@@ -1,5 +1,7 @@
 package com.example.springboot.titan.shop.webapp;
 
+import com.example.springboot.titan.shop.client.UserClient;
+import com.example.springboot.titan.shop.entity.Resp;
 import com.example.springboot.titan.shop.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,12 @@ public class ShopController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
-    @GetMapping("/user2/{userId}")
+    @Autowired
+    private UserClient userClient;
+
+    @GetMapping("/v1/user/{userId}")
     public User getUser2(@PathVariable String userId) {
-        log.info("/user2/" + userId);
+        log.info("/v1/user/" + userId);
 
         return restTemplate.getForObject(userGetUserUrl + userId, User.class);
     }
@@ -38,9 +43,9 @@ public class ShopController {
     /**
      * 使用 ribbon 负载均衡重新获取 用户信息
      */
-    @GetMapping("/user/{userId}")
+    @GetMapping("/v2/user/{userId}")
     public User getUser(@PathVariable String userId) {
-        log.info("/user/" + userId);
+        log.info("/v2/user/" + userId);
 
         return restTemplate.getForObject("http://titan-user-boot/findByUserId/" + userId, User.class);
     }
@@ -52,4 +57,12 @@ public class ShopController {
         log.info("/log-user-instance 当前调用链 {}:{}:{}", serviceInstance.getServiceId(), serviceInstance.getHost(), serviceInstance.getPort());
 
     }
+
+    @GetMapping("/v3/user/{userId}")
+    public Resp getUser3(@PathVariable String userId) {
+        log.info("/v3/user/" + userId);
+
+        return new Resp(userClient.findByUserId(userId));
+    }
+
 }

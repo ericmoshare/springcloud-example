@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eric.Mo
@@ -26,6 +28,13 @@ public class UserController {
         log.info("/findByUserId, userId: " + userId);
         User model = new User();
         model.setUserId(userId);
+
+        // 随机休息
+//        try {
+//            TimeUnit.SECONDS.sleep(new Random().nextInt(6));
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         return userRepository.findOne(Example.of(model));
     }
