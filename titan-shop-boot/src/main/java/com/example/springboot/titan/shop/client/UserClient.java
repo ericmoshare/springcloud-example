@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Eric.Mo
  * @since 2020/3/8
  */
-@FeignClient(name = "titan-user-boot")
+@FeignClient(name = "titan-user-boot", fallbackFactory = UserClientFallbackFactory.class)
 public interface UserClient {
 
     @RequestMapping(value = "/findByUserId/{userId}", method = RequestMethod.GET)

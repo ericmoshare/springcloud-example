@@ -11,7 +11,7 @@
 
     <groupId>com.example.springboot</groupId>
     <artifactId>titan-shop-boot</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>titan-shop-boot</name>
     <description>Demo project for Spring Boot</description>
     <packaging>jar</packaging>
@@ -77,10 +77,16 @@
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
         </dependency>
 
-        <!-- 依赖 Feign -->
+        <!-- 依赖 Feign rpc 调用组件-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 依赖 hystrix 超时机制和断路器 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
     </dependencies>
 

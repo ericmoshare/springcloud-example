@@ -30,11 +30,14 @@ public class UserController {
         model.setUserId(userId);
 
         // 随机休息
-//        try {
-//            TimeUnit.SECONDS.sleep(new Random().nextInt(6));
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            long sleep = new Random().nextInt(5);
+            sleep = 500;
+            log.info("随机休息 {} 毫秒", sleep);
+            TimeUnit.MILLISECONDS.sleep(sleep);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return userRepository.findOne(Example.of(model));
     }
